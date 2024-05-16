@@ -22,7 +22,7 @@ public class Main3 {
         copySynthToTempDir(synthPath);
         copyPatternsToTempDir(patternsDir);
 
-        generate(synthPath, patternsDir);
+        generate(synthPath, patternsDir, generatedDir, "demoFirst", 100);
     }
 
     public static void copySynthToTempDir(Path synthPath) throws IOException {
@@ -40,9 +40,9 @@ public class Main3 {
         }
     }
 
-    public static void generate(Path synth, Path patternDir) throws IOException {
+    public static void generate(Path synth, Path patternDir, Path generatedDir,String documentFileName, long countOfDocuments) throws IOException {
         for (String patternName : patternList) {
-            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "chmod a+x " + synth + ";" + synth + " generate --random --size 10 " + patternDir + "/" + patternName);
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "chmod a+x " + synth + ";" + synth + " generate --random --size " + countOfDocuments + " --to json:" + generatedDir + "/" + documentFileName + ".json " + patternDir + "/" + patternName);
             processBuilder.redirectErrorStream(true);
             Process start = processBuilder.start();
 
